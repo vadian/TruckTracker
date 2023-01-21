@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Socrata;
+﻿using Socrata;
 
 namespace SanFranGeoGrub.Data;
 
@@ -18,7 +17,7 @@ public class TruckTracker
         _fileAccess = fileAccess;
     }
 
-    public async Task<IEnumerable<FoodTruck>> GetTrucks()
+    public async Task<IEnumerable<FoodTruck>> GetAllTrucks()
     {
         if (_trucks is null)
         {

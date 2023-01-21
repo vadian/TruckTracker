@@ -39,10 +39,11 @@ namespace SanFranGeoGrub.Data
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
+
                 }
             }
 
-            return retVal ?? new List<FoodTruck>();
+            return retVal;
         }
     }
 }

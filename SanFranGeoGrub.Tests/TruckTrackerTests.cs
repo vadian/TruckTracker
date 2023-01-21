@@ -1,4 +1,3 @@
-
 namespace SanFranGeoGrub.Tests;
 
 public class TruckTrackerTests
