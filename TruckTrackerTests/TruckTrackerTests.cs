@@ -1,11 +1,17 @@
+using SanFranGeoGrub.Data;
+
 namespace TruckTrackerTests
 {
-    public class UnitTest1
+    public class TruckTrackerTests
     {
-        [Fact]
-        public void Test1()
-        {
+        public TruckTracker CUT = new TruckTracker();
 
+        [Fact]
+        public async Task TestGetData()
+        {
+            var trucks = await CUT.GetData();
+            Assert.NotNull(trucks);
+            Assert.NotEmpty(trucks);
         }
     }
 }

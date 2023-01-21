@@ -9,10 +9,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Connected Services\MobileFoodPermits\MobileFoodPermitsCsdl.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Connected Services\MobileFoodPermits\MobileFoodPermitsCsdl.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Negotiate" Version="6.0.11" />
     <PackageReference Include="Microsoft.OData.Client" Version="7.14.0" />
+    <PackageReference Include="Microsoft.OData.Core" Version="7.14.0" />
+    <PackageReference Include="Microsoft.OData.Edm" Version="7.14.0" />
+    <PackageReference Include="Microsoft.Spatial" Version="7.14.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+    <PackageReference Include="System.Text.Json" Version="7.0.1" />
   </ItemGroup>
 
 </Project>
