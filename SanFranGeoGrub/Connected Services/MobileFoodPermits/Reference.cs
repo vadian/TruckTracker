@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generation date: 1/21/2023 9:37:07 AM
+// Generation date: 1/21/2023 10:15:32 AM
 namespace Socrata
 {
     /// <summary>
@@ -78,14 +78,14 @@ namespace Socrata
         /// There are no comments for FoodTruck in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
-        [global::Microsoft.OData.Client.OriginalNameAttribute("FoodTruck")]
+        [global::Microsoft.OData.Client.OriginalNameAttribute("rqzj-sfat")]
         public virtual global::Microsoft.OData.Client.DataServiceQuery<FoodTruck> FoodTruck
         {
             get
             {
                 if ((this._FoodTruck == null))
                 {
-                    this._FoodTruck = base.CreateQuery<FoodTruck>("FoodTruck");
+                    this._FoodTruck = base.CreateQuery<FoodTruck>("rqzj-sfat");
                 }
                 return this._FoodTruck;
             }
@@ -96,9 +96,9 @@ namespace Socrata
         /// There are no comments for FoodTruck in the schema.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
-        public virtual void AddToFoodTruck(FoodTruck FoodTruck)
+        public virtual void AddToFoodTruck(FoodTruck rqzj)
         {
-            base.AddObject("FoodTruck", FoodTruck);
+            base.AddObject("rqzj-sfat", rqzj);
         }
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
         private abstract class GeneratedEdmModel
@@ -167,7 +167,7 @@ namespace Socrata
     /// <summary>
     /// There are no comments for FoodTruckSingle in the schema.
     /// </summary>
-    [global::Microsoft.OData.Client.OriginalNameAttribute("FoodTruckSingle")]
+    [global::Microsoft.OData.Client.OriginalNameAttribute("rqzj-sfatSingle")]
     public partial class FoodTruckSingle : global::Microsoft.OData.Client.DataServiceQuerySingle<FoodTruck>
     {
         /// <summary>
@@ -196,8 +196,8 @@ namespace Socrata
     /// __id
     /// </KeyProperties>
     [global::Microsoft.OData.Client.Key("__id")]
-    [global::Microsoft.OData.Client.EntitySet("FoodTruck")]
-    [global::Microsoft.OData.Client.OriginalNameAttribute("FoodTruck")]
+    [global::Microsoft.OData.Client.EntitySet("rqzj-sfat")]
+    [global::Microsoft.OData.Client.OriginalNameAttribute("rqzj-sfat")]
     public partial class FoodTruck : global::Microsoft.OData.Client.BaseEntityType, global::System.ComponentModel.INotifyPropertyChanged
     {
         /// <summary>
@@ -207,9 +207,9 @@ namespace Socrata
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.OData.Client.Design.T4", "#VersionNumber#")]
         public static FoodTruck CreateFoodTruck(string __id)
         {
-            FoodTruck FoodTruck = new FoodTruck();
-            FoodTruck.__id = __id;
-            return FoodTruck;
+            FoodTruck rqzj = new FoodTruck();
+            rqzj.__id = __id;
+            return rqzj;
         }
         /// <summary>
         /// There are no comments for Property __id in the schema.

@@ -13749,7 +13749,7 @@
         <Property Name="gross_sq_ft" Type="Edm.Decimal" />
         <Property Name="latitude" Type="Edm.String" />
       </EntityType>
-      <EntityType Name="FoodTruck">
+      <EntityType Name="rqzj-sfat">
         <Key>
           <PropertyRef Name="__id" />
         </Key>
@@ -18309,7 +18309,7 @@
         <EntitySet Name="rkru-6vcg" EntityType="socrata.rkru-6vcg" />
         <EntitySet Name="rny7-88gk" EntityType="socrata.rny7-88gk" />
         <EntitySet Name="rq3a-jamn" EntityType="socrata.rq3a-jamn" />
-        <EntitySet Name="FoodTruck" EntityType="socrata.FoodTruck" />
+        <EntitySet Name="rqzj-sfat" EntityType="socrata.rqzj-sfat" />
         <EntitySet Name="rutu-rpar" EntityType="socrata.rutu-rpar" />
         <EntitySet Name="rwdu-9wb2" EntityType="socrata.rwdu-9wb2" />
         <EntitySet Name="rww3-arqy" EntityType="socrata.rww3-arqy" />

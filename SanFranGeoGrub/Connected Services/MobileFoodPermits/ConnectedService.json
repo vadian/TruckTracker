@@ -10,7 +10,7 @@
     "IncludeT4File": false,
     "ExcludedOperationImports": [],
     "ExcludedBoundOperations": [],
-    "ServiceName": "MobileFoodPermits",
+    "ServiceName": "OData Service",
     "Endpoint": "https://data.sfgov.org/api/odata/v4/$metadata",
     "EdmxVersion": {
       "Major": 4,
