@@ -5,7 +5,7 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SanFranGeoGrub", "SanFranGeoGrub\SanFranGeoGrub.csproj", "{7E6FEE41-0F9B-421B-938D-9B45F7C335B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TruckTrackerTests", "TruckTrackerTests\TruckTrackerTests.csproj", "{A72E1851-C9E2-43DD-899A-78C7D9804586}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SanFranGeoGrub.Tests", "SanFranGeoGrub.Tests\SanFranGeoGrub.Tests.csproj", "{301DAFAB-95C5-4A01-BD63-C9CD913E705B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{7E6FEE41-0F9B-421B-938D-9B45F7C335B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E6FEE41-0F9B-421B-938D-9B45F7C335B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E6FEE41-0F9B-421B-938D-9B45F7C335B1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A72E1851-C9E2-43DD-899A-78C7D9804586}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A72E1851-C9E2-43DD-899A-78C7D9804586}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A72E1851-C9E2-43DD-899A-78C7D9804586}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A72E1851-C9E2-43DD-899A-78C7D9804586}.Release|Any CPU.Build.0 = Release|Any CPU
+		{301DAFAB-95C5-4A01-BD63-C9CD913E705B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{301DAFAB-95C5-4A01-BD63-C9CD913E705B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{301DAFAB-95C5-4A01-BD63-C9CD913E705B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{301DAFAB-95C5-4A01-BD63-C9CD913E705B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,26 +1,42 @@
-﻿using System.Collections;
-using Microsoft.OData.Client;
+﻿using Newtonsoft.Json;
 using Socrata;
 
 namespace SanFranGeoGrub.Data;
 
 public class TruckTracker
 {
-    public static TruckTracker Instance = new TruckTracker();
+    private readonly ITruckDataSource _truckSource;
+    private readonly IFileAccess _fileAccess;
+    public static TruckTracker Instance => _instance ??= new TruckTracker(new TruckDataSource(), new FileAccess());
 
-    public async Task<IEnumerable<FoodTruck>> GetData()
+    private static TruckTracker? _instance;
+    private IEnumerable<FoodTruck>? _trucks;
+
+    public TruckTracker(ITruckDataSource truckSource, IFileAccess fileAccess)
     {
-        var serviceRoot = "https://data.sfgov.org/api/odata/v4/";
-        var context = new Socrata.Service(new Uri(serviceRoot));
+        _truckSource = truckSource;
+        _fileAccess = fileAccess;
+    }
 
-        var trucks = await context.FoodTruck.ExecuteAsync();
-
-        var truckList = trucks.ToList();
-
-        foreach (var truck in truckList) { 
-            Console.WriteLine(truck);
+    public async Task<IEnumerable<FoodTruck>> GetTrucks()
+    {
+        if (_trucks is null)
+        {
+            _trucks = await _fileAccess.ReadFromCache();
         }
 
-        return truckList;
+        return _trucks ??= await FetchOdataAsync();
+    }
+
+    internal async Task<IEnumerable<FoodTruck>> FetchOdataAsync()
+    {
+        var trucks = await _truckSource.GetFoodTrucks();
+
+        if (trucks.Any())
+        {
+            await _fileAccess.SaveToCache(trucks);
+        }
+
+        return trucks;
     }
 }
