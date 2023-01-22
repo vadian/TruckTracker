@@ -4,18 +4,23 @@ namespace SanFranGeoGrub.Data;
 
 public class CachedTruckTracker : LiveTruckTracker
 {
-    private IEnumerable<FoodTruck>? _allTrucks;
+    private List<FoodTruck> _allTrucks = new ();
+    private DateTime _lastTruckUpdate = DateTime.MinValue;
+    private readonly TimeSpan _cacheExpirationTime = TimeSpan.FromMinutes(5);
     
-    private static CachedTruckTracker? _instance;
+    private static readonly CachedTruckTracker? _instance;
     public new static CachedTruckTracker Instance = _instance ??= new CachedTruckTracker(new TruckDataSource());
+    public CachedTruckTracker(ITruckDataSource dataSource) : base(dataSource) { }
 
     public async Task<IEnumerable<FoodTruck>> GetAllTrucks()
     {
-        return _allTrucks ??= await _truckSource.GetAllFoodTrucks();
+        if (DateTime.Now - _lastTruckUpdate > _cacheExpirationTime)
+        {
+            _lastTruckUpdate = DateTime.Now;
+            _allTrucks = await _truckSource.GetAllFoodTrucks();
+        }
+        return _allTrucks;
     }
-
-    
-    public CachedTruckTracker(ITruckDataSource dataSource) : base(dataSource) { }
 
     public override async Task<IEnumerable<FoodTruck>> GetTruckByName(string name, string? status = null)
     {
@@ -30,14 +35,10 @@ public class CachedTruckTracker : LiveTruckTracker
         return trucks;
     }
 
-    public override async Task<IEnumerable<FoodTruck>> GetTruckByStreet(string street)
-    {
-        var trucks = await GetAllTrucks();
-        trucks = trucks
+    public override async Task<IEnumerable<FoodTruck>> GetTruckByStreet(string street) => 
+        (await GetAllTrucks())
             .Where(x => x.Location_address.ToLower().Contains(street.ToLower()));
-
-        return trucks;
-    }
+    
 
     public virtual async Task<IEnumerable<FoodTruck>> GetTrucksNear(decimal refLatitude, decimal refLongitude, bool includeAll = false)
     {

@@ -24,6 +24,26 @@ public class CachedTruckTrackerTests
     }
 
     [Fact]
+    public async Task it_should_utilize_the_cache()
+    {
+        var mockTrucks = new List<FoodTruck>()
+        {
+            new FoodTruck() { __id = "one" },
+            new FoodTruck() { __id = "two" },
+        };
+
+        truckDataSource.Setup(x => x.GetAllFoodTrucks()).ReturnsAsync(mockTrucks);
+        CachedTruckTracker CUT = new CachedTruckTracker(truckDataSource.Object);
+
+        var trucks = await CUT.GetAllTrucks();
+        trucks = await CUT.GetAllTrucks();
+
+        truckDataSource.Verify(x => x.GetAllFoodTrucks(), Times.Once());
+
+        Assert.Equal(mockTrucks.Count, trucks.Count());
+    }
+
+    [Fact]
     public async Task it_should_filter_by_name()
     {
         var mockTrucks = new List<FoodTruck>()
@@ -95,6 +115,54 @@ public class CachedTruckTrackerTests
         CachedTruckTracker CUT = new CachedTruckTracker(truckDataSource.Object);
 
         var trucks = await CUT.GetTrucksNear(0, 0);
+
+        Assert.Equal(5, trucks.Count());
+        Assert.True(trucks.All((x) => "Correct".Equals(x.__id)));
+    }
+
+    [Fact]
+    public async Task it_should_filter_by_location_and_status()
+    {
+        var mockTrucks = new List<FoodTruck>()
+        {
+            new () { Applicant = "Valid", Status = "APPROVED", __id = "Correct", Latitude = -2, Longitude = -2},
+            new () { Applicant = "Valid", Status = "APPROVED", __id = "Correct", Latitude = 2, Longitude = 2 },
+            new () { Applicant = "Invalid", Status = "INVALID", __id = "Incorrect", Latitude = 3, Longitude = 3 },
+            new () { Applicant = "Valid", Status = "APPROVED", __id = "Correct", Latitude = -4, Longitude = 4 },
+            new () { Applicant = "Invalid", Status = "INVALID", __id = "Incorrect", Latitude = 1, Longitude = 1 },
+            new () { Applicant = "Valid", Status = "APPROVED", __id = "Correct", Latitude = -4, Longitude = 4 },
+            new () { Applicant = "Valid", Status = "APPROVED", __id = "Correct", Latitude = -4, Longitude = 4 },
+            new () { Applicant = "Valid", Status = "APPROVED", __id = "Incorrect", Latitude = 5, Longitude = -5 },
+        };
+
+        truckDataSource.Setup(x => x.GetAllFoodTrucks()).ReturnsAsync(mockTrucks);
+        CachedTruckTracker CUT = new CachedTruckTracker(truckDataSource.Object);
+
+        var trucks = await CUT.GetTrucksNear(0, 0);
+
+        Assert.Equal(5, trucks.Count());
+        Assert.True(trucks.All((x) => "Correct".Equals(x.__id)));
+    }
+
+    [Fact]
+    public async Task it_should_filter_by_location_and_allow_any_status()
+    {
+        var mockTrucks = new List<FoodTruck>()
+        {
+            new () { Applicant = "Valid", Status = "APPROVED", __id = "Correct", Latitude = -2, Longitude = -2},
+            new () { Applicant = "Valid", Status = "APPROVED", __id = "Correct", Latitude = 2, Longitude = 2 },
+            new () { Applicant = "Valid", Status = "INVALID", __id = "Correct", Latitude = 3, Longitude = 3 },
+            new () { Applicant = "Valid", Status = "APPROVED", __id = "Correct", Latitude = -4, Longitude = 3 },
+            new () { Applicant = "Valid", Status = "INVALID", __id = "Correct", Latitude = 1, Longitude = 1 },
+            new () { Applicant = "Valid", Status = "APPROVED", __id = "Incorrect", Latitude = -4, Longitude = 4 },
+            new () { Applicant = "Valid", Status = "APPROVED", __id = "Incorrect", Latitude = -4, Longitude = 4 },
+            new () { Applicant = "Valid", Status = "APPROVED", __id = "Incorrect", Latitude = 5, Longitude = -5 },
+        };
+
+        truckDataSource.Setup(x => x.GetAllFoodTrucks()).ReturnsAsync(mockTrucks);
+        CachedTruckTracker CUT = new CachedTruckTracker(truckDataSource.Object);
+
+        var trucks = await CUT.GetTrucksNear(0, 0, true);
 
         Assert.Equal(5, trucks.Count());
         Assert.True(trucks.All((x) => "Correct".Equals(x.__id)));

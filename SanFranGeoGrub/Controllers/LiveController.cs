@@ -10,25 +10,15 @@ namespace SanFranGeoGrub.Controllers;
 [Route("TruckTracker/api/v1/live")]
 public class LiveController : ControllerBase
 {
+    [HttpGet("applicant/{name}", Name = "Get Location by Applicant Name from cache")]
+    public async Task<IEnumerable<FoodTruck>> GetByApplicant(string name) =>
+        await LiveTruckTracker.Instance.GetTruckByName(name);
 
-    private readonly ILogger<LiveController> _logger;
+    [HttpGet("applicant/{name}/{status}", Name = "Get Location by Applicant Name and Status from cache")]
+    public async Task<IEnumerable<FoodTruck>> GetByApplicantAndStatus(string name, string status) =>
+        await LiveTruckTracker.Instance.GetTruckByName(name, status);
 
-    public LiveController(ILogger<LiveController> logger)
-    {
-        _logger = logger;
-    }
-
-    [HttpGet("trucks/search/applicant/{name}", Name = "Get Location by Applicant Name from cache")]
-    public async Task<IEnumerable<FoodTruck>> GetByApplicant(string name)
-    {
-        var trucks = await LiveTruckTracker.Instance.GetTruckByName(name);
-        return trucks;
-    }
-
-    [HttpGet("trucks/search/street/{street}", Name = "Get Location by Street Name from cache")]
-    public async Task<IEnumerable<FoodTruck>> GetByStreet(string street)
-    {
-        var trucks = await LiveTruckTracker.Instance.GetTruckByStreet(street);
-        return trucks;
-    }
+    [HttpGet("street/{street}", Name = "Get Location by Street Name from cache")]
+    public async Task<IEnumerable<FoodTruck>> GetByStreet(string street) =>
+        await LiveTruckTracker.Instance.GetTruckByStreet(street);
 }

@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-using System.Xml.Linq;
-using Socrata;
+﻿using Socrata;
 
 namespace SanFranGeoGrub.Data
 {
@@ -15,20 +13,8 @@ namespace SanFranGeoGrub.Data
 
         static readonly string SERVICE_ROOT = "https://data.sfgov.org/api/odata/v4/";
 
-        public async Task<List<FoodTruck>> GetAllFoodTrucks()
-        {
-            var context = _getContext();
-
-            var trucks = await context.FoodTruck.ExecuteAsync();
-            return trucks.ToList();
-
-        }
-
-        private static Service _getContext()
-        {
-            var context = new Socrata.Service(new Uri(SERVICE_ROOT));
-            return context;
-        }
+        public async Task<List<FoodTruck>> GetAllFoodTrucks() =>
+            (await _getContext().FoodTruck.ExecuteAsync()).ToList();
 
         public Task<List<FoodTruck>> GetTrucksByName(string name, string? status = null)
         {
@@ -44,14 +30,11 @@ namespace SanFranGeoGrub.Data
             return Task.FromResult(trucks.ToList());
         }
 
-        public Task<List<FoodTruck>> GetTrucksByStreet(string street)
-        {
-            var context = _getContext();
-            var trucks = context.FoodTruck
-                .Where(x => x.Location_address.ToLower().Contains(street.ToLower()));
+        public Task<List<FoodTruck>> GetTrucksByStreet(string street) =>
+            Task.FromResult(_getContext().FoodTruck
+                .Where(x => x.Location_address.ToLower().Contains(street.ToLower()))
+                .ToList());
 
-            return Task.FromResult(trucks.ToList());
-        }
-
+        private static Service _getContext() => new (new (SERVICE_ROOT));
     }
 }

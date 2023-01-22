@@ -10,38 +10,27 @@ namespace SanFranGeoGrub.Controllers;
 [Route("TruckTracker/api/v1/cached")]
 public class CachedController : ControllerBase
 {
-
-    private readonly ILogger<CachedController> _logger;
-
-    public CachedController(ILogger<CachedController> logger)
-    {
-        _logger = logger;
-    }
-
     [HttpGet("trucks", Name = "Get All Locations")]
-    public async Task<IEnumerable<FoodTruck>> GetAllTrucks()
-    {
-        return await CachedTruckTracker.Instance.GetAllTrucks();
-    }
+    public async Task<IEnumerable<FoodTruck>> GetAllTrucks() =>
+        await CachedTruckTracker.Instance.GetAllTrucks();
 
-    [HttpGet("trucks/search/applicant/{name}/{status}", Name = "Get Location by Applicant Name")]
-    public async Task<IEnumerable<FoodTruck>> GetByApplicant(string name, string? status)
-    {
-        var trucks = await CachedTruckTracker.Instance.GetTruckByName(name, status);
-        return trucks;
-    }
+    [HttpGet("trucks/search/applicant/{name}", Name = "Get Location by Applicant Name")]
+    public async Task<IEnumerable<FoodTruck>> GetByApplicant(string name) =>
+        await CachedTruckTracker.Instance.GetTruckByName(name);
 
+    [HttpGet("trucks/search/applicant/{name}/{status}", Name = "Get Location by Applicant Name and Status")]
+    public async Task<IEnumerable<FoodTruck>> GetByApplicantAndStatus(string name, string status)
+        => await CachedTruckTracker.Instance.GetTruckByName(name, status);
+    
     [HttpGet("trucks/search/street/{street}", Name = "Get Location by Street Name")]
     public async Task<IEnumerable<FoodTruck>> GetByStreet(string street)
-    {
-        var trucks = await CachedTruckTracker.Instance.GetTruckByStreet(street);
-        return trucks;
-    }
+        => await CachedTruckTracker.Instance.GetTruckByStreet(street);
 
-    [HttpGet("trucks/search/location/{latitude}/{longitude}/{includeAll}", Name = "Get Nearby Locations")]
-    public async Task<IEnumerable<FoodTruck>> GetByStreet(decimal latitude, decimal longitude, bool includeAll = false)
-    {
-        var trucks = await CachedTruckTracker.Instance.GetTrucksNear(latitude, longitude, includeAll);
-        return trucks;
-    }
+    [HttpGet("trucks/search/location/{latitude}/{longitude}", Name = "Get Nearby Accepted Locations")]
+    public async Task<IEnumerable<FoodTruck>> GetNearbyAccepted(decimal latitude, decimal longitude) =>
+        await CachedTruckTracker.Instance.GetTrucksNear(latitude, longitude);
+
+    [HttpGet("trucks/search/location/{latitude}/{longitude}/includeAll", Name = "Get Nearby Locations")]
+    public async Task<IEnumerable<FoodTruck>> GetAllNearby(decimal latitude, decimal longitude)
+    => await CachedTruckTracker.Instance.GetTrucksNear(latitude, longitude, includeAll: true);
 }

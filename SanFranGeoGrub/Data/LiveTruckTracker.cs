@@ -14,14 +14,9 @@ public class LiveTruckTracker
     }
 
 
-    public virtual async Task<IEnumerable<FoodTruck>> GetTruckByName(string name, string? status = null)
-    {
-        return await _truckSource.GetTrucksByName(name, status);
-    }
+    public virtual async Task<IEnumerable<FoodTruck>> GetTruckByName(string name, string? status = null) =>
+        await _truckSource.GetTrucksByName(name, status);
 
-    public virtual async Task<IEnumerable<FoodTruck>> GetTruckByStreet(string street)
-    {
-        return await _truckSource.GetTrucksByStreet(street);
-    }
-
+    public virtual async Task<IEnumerable<FoodTruck>> GetTruckByStreet(string street) =>
+        await _truckSource.GetTrucksByStreet(street);
 }
