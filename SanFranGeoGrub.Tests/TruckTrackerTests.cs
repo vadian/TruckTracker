@@ -1,16 +1,15 @@
 namespace SanFranGeoGrub.Tests;
 
-public class TruckTrackerTests
+public class CachedTruckTrackerTests
 {
-    private Mock<IFileAccess> fileAccess = new ();
     private Mock<TruckDataSource> truckDataSource = new();
 
     [Fact]
     public async Task TestGetData()
     {
-        TruckTracker CUT = new TruckTracker(truckDataSource.Object, fileAccess.Object);
+        CachedTruckTracker CUT = new CachedTruckTracker(truckDataSource.Object);
 
-        var trucks = await CUT.FetchOdataAsync();
+        var trucks = await CUT.GetAllTrucks();
 
         Assert.NotNull(trucks);
         Assert.NotEmpty(trucks);
