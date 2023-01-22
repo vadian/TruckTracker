@@ -7,7 +7,7 @@
 ### Docker image location:
 https://hub.docker.com/repository/docker/carlmcodes/trucktracker/tags
 
-This is a windows Docker container.  Please map ports as 80:80 and 443:443 and connect to `http://localhost:80/swagger/index.html` to access Swagger documentation and live queries.  Alternatively, this solution can be debugged with IIS Express or Docker in VS2022.
+This is a windows Docker container.  Please map ports as 80:80 and 443:443 and connect to `http://localhost:80/swagger/index.html` to access Swagger documentation and live queries.  Alternatively, this solution can be debugged with IIS Express or Docker in VS2022.  Tests are ran in the process of building the Docker image, but can also be ran manually in VS2022 or via `dotnet test`.
 
 ---
 ## Objectives:
@@ -29,7 +29,7 @@ Two controllers are present.  One is responsible for handling live queries to th
 
 Only the cached TruckTracker has a (bonus) endpoint to fetch all data, and the GIS search function is also restricted to cached data.  The cache is updated when a query is received if the cache is more than 5 minutes out of date.
 
-Unfortunately, the logic which handles the OData queries is not easily testable, and is reliant on generated code.  All query logic that operates on cached data is under unit tests.  XUnit tests, with all setup restricted to the test, is utilized.
+Unfortunately, the logic which handles the OData queries is not easily testable, as it is reliant on generated code.  All query logic that operates on cached data is under unit tests.  XUnit tests, with all setup restricted to the test following best practices, is utilized.
 
 Windows Authorization was used, but for purposes of this project, Anonymous Authorization is explicitly allowed for these Controllers.
 
@@ -53,15 +53,18 @@ With the decision to use ASP.NET Core, most architectural decisions flowed from 
 
 * Personally, this author prefers functional approaches for data manipulation. This is impossible with the Microsoft OData Client, and OOP approaches were consistently used throughout this project.
 
+* Test coverage is not the best.  It is over 50% coverage on the logical portion of the application, `TruckTracker.Data`.  However, it does not exercise all edge cases.
+
 ### What are the things you left out?
 * Actual Authentication/Authorization
 * Logging
 * Class/method summaries
+* Caching to local disk was initially implemented, but cannot be used with OData generated objects.  This dead code was left in, as it could be used if a decision is made to map the data to a slimmer class.  Dead code is a smell, so I'd address that sooner rather than later.
 
 ### What are the problems with your implementation and how would you solve them if we had to scale the application to a large number of users?
 * Cache update logic - this does not cleanly handle multiple concurrent requests to update the cache.  This will not scale well, but can be resolved by adding a CacheUpdateProvider class which is used to make the cache update requests effectively idempotent.
 * All data available via the OData API is currently provided to the calling user.  This is data hungry, and in production, this should be pruned back to the relevant data by use of a Response object.  This is also a security improvement in many production APIs, though that is not a concern here, as all data is already public.
-* All live API endpoints should be disabled with a large number of users.  For this project, the data set itself is trivial and can be held entirely in memory.  This allows for the caching we've used here, and is a consideration of which we should take advantage.
+* All live API endpoints should be disabled with a large number of users.  For this project, the data set itself is trivial and can be held entirely in memory.  This allows for the caching we've used here, and is a consideration of which we should take advantage.  These live endpoints are really just here to show I can easily handle either approach.
 * Currently, this is a single docker microservice that handles its own cache and retrieves its own data.  For a more robust system, a shared volume might be used allowing for multiple instances of the service behind a load balancer to share a cache, scaling our API horizontally while maintaining the same number of requests to the upstream data source.  However, each instance maintaining its own cache is the most resilient approach.
 
-### TIme Spent: ~10-12 hours
+### Time Spent: ~10-12 hours
