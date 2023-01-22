@@ -2,14 +2,20 @@
 
 namespace TruckTracker.Data;
 
-public class CachedTruckTracker : LiveTruckTracker
+public interface ICachedTruckTracker
+{
+    Task<IEnumerable<FoodTruck>> GetAllTrucks();
+    Task<IEnumerable<FoodTruck>> GetTruckByName(string name, string? status = null);
+    Task<IEnumerable<FoodTruck>> GetTruckByStreet(string street);
+    Task<IEnumerable<FoodTruck>> GetTrucksNear(decimal refLatitude, decimal refLongitude, bool includeAll = false);
+}
+
+public class CachedTruckTracker : LiveTruckTracker, ICachedTruckTracker
 {
     private List<FoodTruck> _allTrucks = new ();
     private DateTime _lastTruckUpdate = DateTime.MinValue;
     private readonly TimeSpan _cacheExpirationTime = TimeSpan.FromMinutes(5);
     
-    private static readonly CachedTruckTracker? _instance;
-    public new static CachedTruckTracker Instance = _instance ??= new CachedTruckTracker(new TruckDataSource());
     public CachedTruckTracker(ITruckDataSource dataSource) : base(dataSource) { }
 
     public async Task<IEnumerable<FoodTruck>> GetAllTrucks()

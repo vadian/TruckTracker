@@ -10,7 +10,7 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["TruckTracker/TruckTracker.csproj", "TruckTracker/"]
+COPY ["/", "TruckTracker/"]
 RUN dotnet restore "TruckTracker/TruckTracker.csproj"
 COPY . .
 WORKDIR "/src/TruckTracker"

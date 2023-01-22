@@ -2,11 +2,15 @@
 
 namespace TruckTracker.Data;
 
-public class LiveTruckTracker
+public interface ILiveTruckTracker
+{
+    public Task<IEnumerable<FoodTruck>> GetTruckByName(string name, string? status = null);
+    public Task<IEnumerable<FoodTruck>> GetTruckByStreet(string street);
+}
+
+public class LiveTruckTracker : ILiveTruckTracker
 {
     protected readonly ITruckDataSource _truckSource;
-    private static LiveTruckTracker? _instance;
-    public static LiveTruckTracker Instance => _instance ??= new LiveTruckTracker(new TruckDataSource());
 
     public LiveTruckTracker(ITruckDataSource truckSource)
     {

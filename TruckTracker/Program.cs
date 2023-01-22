@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.Negotiate;
+using TruckTracker.Data;
 
 namespace TruckTracker
 {
@@ -24,14 +25,15 @@ namespace TruckTracker
                 options.FallbackPolicy = options.DefaultPolicy;
             });
 
+            builder.Services.AddSingleton<ITruckDataSource, TruckDataSource>();
+            builder.Services.AddSingleton<ILiveTruckTracker, LiveTruckTracker>();
+            builder.Services.AddSingleton<ICachedTruckTracker, CachedTruckTracker>();
+
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+            
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
             app.UseHttpsRedirection();
 
