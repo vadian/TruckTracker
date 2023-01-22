@@ -1,6 +1,6 @@
 ﻿using Socrata;
 
-namespace SanFranGeoGrub.Data;
+namespace TruckTracker.Data;
 
 public class LiveTruckTracker
 {

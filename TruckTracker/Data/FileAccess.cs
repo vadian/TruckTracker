@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Socrata;
 
-namespace SanFranGeoGrub.Data
+namespace TruckTracker.Data
 {
 
     public interface IFileAccess

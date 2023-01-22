@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SanFranGeoGrub.Data;
+using TruckTracker.Data;
 using Socrata;
 
-namespace SanFranGeoGrub.Controllers;
+namespace TruckTracker.Controllers;
 
 [AllowAnonymous]
 [ApiController]

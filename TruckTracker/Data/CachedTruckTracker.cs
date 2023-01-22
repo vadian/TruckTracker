@@ -1,6 +1,6 @@
 ﻿using Socrata;
 
-namespace SanFranGeoGrub.Data;
+namespace TruckTracker.Data;
 
 public class CachedTruckTracker : LiveTruckTracker
 {
@@ -37,7 +37,8 @@ public class CachedTruckTracker : LiveTruckTracker
 
     public override async Task<IEnumerable<FoodTruck>> GetTruckByStreet(string street) => 
         (await GetAllTrucks())
-            .Where(x => x.Location_address.ToLower().Contains(street.ToLower()));
+        .Where(x => x.Address.ToLower().Contains(street.ToLower()) ||
+                    x.Locationdescription.ToLower().Contains(street.ToLower()));
     
 
     public virtual async Task<IEnumerable<FoodTruck>> GetTrucksNear(decimal refLatitude, decimal refLongitude, bool includeAll = false)

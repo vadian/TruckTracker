@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "SanFranGeoGrub": {
+    "TruckTracker": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",

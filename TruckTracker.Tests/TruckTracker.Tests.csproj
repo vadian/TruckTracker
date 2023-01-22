@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SanFranGeoGrub\SanFranGeoGrub.csproj" />
+    <ProjectReference Include="..\TruckTracker\TruckTracker.csproj" />
   </ItemGroup>
 
 </Project>

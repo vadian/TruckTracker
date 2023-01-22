@@ -1,6 +1,6 @@
 using Socrata;
 
-namespace SanFranGeoGrub.Tests;
+namespace TruckTracker.Tests;
 
 public class CachedTruckTrackerTests
 {

@@ -1,6 +1,6 @@
 ﻿using Socrata;
 
-namespace SanFranGeoGrub.Data
+namespace TruckTracker.Data
 {
     public interface ITruckDataSource
     {
@@ -32,7 +32,7 @@ namespace SanFranGeoGrub.Data
 
         public Task<List<FoodTruck>> GetTrucksByStreet(string street) =>
             Task.FromResult(_getContext().FoodTruck
-                .Where(x => x.Location_address.ToLower().Contains(street.ToLower()))
+                .Where(x => x.Locationdescription.ToLower().Contains(street.ToLower()))
                 .ToList());
 
         private static Service _getContext() => new (new (SERVICE_ROOT));

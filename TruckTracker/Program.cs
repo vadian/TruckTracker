@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Negotiate;
 
-namespace SanFranGeoGrub
+namespace TruckTracker
 {
     public class Program
     {

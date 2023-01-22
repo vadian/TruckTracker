@@ -10,16 +10,16 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["SanFranGeoGrub/SanFranGeoGrub.csproj", "SanFranGeoGrub/"]
-RUN dotnet restore "SanFranGeoGrub/SanFranGeoGrub.csproj"
+COPY ["TruckTracker/TruckTracker.csproj", "TruckTracker/"]
+RUN dotnet restore "TruckTracker/TruckTracker.csproj"
 COPY . .
-WORKDIR "/src/SanFranGeoGrub"
-RUN dotnet build "SanFranGeoGrub.csproj" -c Release -o /app/build
+WORKDIR "/src/TruckTracker"
+RUN dotnet build "TruckTracker.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "SanFranGeoGrub.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "TruckTracker.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "SanFranGeoGrub.dll"]
+ENTRYPOINT ["dotnet", "TruckTracker.dll"]
